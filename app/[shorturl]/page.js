@@ -1,24 +1,19 @@
 import { redirect } from "next/navigation"
 import connectDB from "@/lib/mongodb"
+import Url from "@/models/url"
 
 
 export default async function Page({ params }) {
-    const shorturl = (await params).shorturl
+  const shortUrl = (await params).shorturl
+  console.log("shorturl is :", shortUrl)
+  await connectDB();
 
-    const client = await connectDB();
-    const db = client.db
-    const collection = db.collection("url")
- 
-    const doc = await collection.findOne({shorturl: shorturl})
-    console.log("doc is :", doc)
-    if (doc) {
-        // Redirect to the URL stored in the database
-        return redirect(doc.url);
-      } else {
-        // Redirect to homepage if not found
-        return redirect(`${process.env.NEXT_PUBLIC_HOST}`);
-      }
-    
-      // If for some reason the redirection doesn't happen, show fallback content (unlikely to be reached)
-      return <div>Redirecting...</div>;
+  const doc = await Url.findOne({ shortUrl })
+  console.log("doc is :", doc)
+  if (doc) {
+    // Redirect to the URL stored in the database
+    return redirect(doc.originalUrl);
+  } else {
+    return <h1 className="text-center my-20 font-bold text-2xl text-red-500">Soemthing went wrong!</h1>
   }
+}
