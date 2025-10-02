@@ -18,7 +18,7 @@ export async function generateShortUrl(initialState, formData) {
     return {
       success: false,
       error: true,
-      message: "URL name already exists!",
+      message: "URL name already used!",
     };
   }
   const result = await Url.create({

@@ -14,6 +14,6 @@ export default async function Page({ params }) {
     // Redirect to the URL stored in the database
     return redirect(doc.originalUrl);
   } else {
-    return <h1 className="text-center my-20 font-bold text-2xl text-red-500">Soemthing went wrong!</h1>
+    return <h1 className="text-center my-20 font-bold text-2xl text-red-500">Something went wrong!</h1>
   }
 }

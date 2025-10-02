@@ -22,16 +22,15 @@ const Shorten = () => {
             placeholder="Enter Url ex. https://www.google.com"
           />
 
-          {/* <div className="text-red-500">{urlError}</div> */}
-
           <input
             name="shortUrl"
             className="bg-blue-200/20 rounded-xl px-4 py-2 w-[80%]"
             type="text"
-            placeholder="Enter Name ex. nomi or google"
+            placeholder="Enter URL Name ex. nomi or google"
             
           />
-          {state.error && <div className="text-red-500">{state.message}</div>}
+          {state.error && <div className="text-red-500 font-bold">{state.message}</div>}
+          {/* <div className="text-red-500 font-bold">URL name already used!</div> */}
 
           <button
             type="submit"
