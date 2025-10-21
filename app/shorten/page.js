@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useActionState, useState } from "react";
-import Link from "next/link";
 import { generateShortUrl } from "@/actions/shortUrl";
 
 const Shorten = () => {
@@ -21,6 +20,8 @@ const Shorten = () => {
             type="text"
             placeholder="Enter Url ex. https://www.google.com"
           />
+          {/* show zod error */}
+          {state?.error?.zodError.originalUrl && <div className="text-red-500 font-bold">{state?.error?.zodError.originalUrl}</div>}
 
           <input
             name="shortUrl"
@@ -29,8 +30,7 @@ const Shorten = () => {
             placeholder="Enter URL Name ex. nomi or google"
             
           />
-          {state.error && <div className="text-red-500 font-bold">{state.message}</div>}
-          {/* <div className="text-red-500 font-bold">URL name already used!</div> */}
+          {state?.error?.zodError.shortUrl && <div className="text-red-500 font-bold">{state?.error?.zodError.shortUrl}</div>}
 
           <button
             type="submit"
