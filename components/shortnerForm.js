@@ -31,7 +31,7 @@ const ShortnerFrom = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="bg-blue-400 font-bold rounded-xl px-4 py-2 my-2 text-white disabled:bg-blue-300"
+            className="bg-blue-500 font-bold rounded-xl px-4 py-2 my-2 text-white disabled:bg-blue-400 disabled:cursor-not-allowed"
           >
             {isPending ? "Processing" : "Shorten"}
           </button>

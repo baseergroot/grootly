@@ -1,3 +1,4 @@
+import Navbar from "@/components/navbar";
 import ShortnerFrom from "@/components/shortnerForm";
 import connectDB from "@/lib/mongodb";
 import User from "@/models/user";
@@ -23,10 +24,11 @@ const Shorten = async () => {
   console.log("shortUrls is :", userHistory);
 
   return (
-    <main className="w-[100vw]  min-h-[100vh] py-20 ">
-      <h1 className="text-center text-3xl font-bold text-white bg-blue-200/20 py-5 rounded-xl w-[80%] mx-auto">
+    <main className="w-[100vw]  min-h-[100vh] py-3 lg:py-5 ">
+      {/* <h1 className="text-center text-3xl font-bold text-white bg-blue-200/20 py-5 rounded-xl w-[80%] mx-auto">
         Grootly
-      </h1>
+      </h1> */}
+      <Navbar />
       <ShortnerFrom />
       <section>
         <h2 className="text-center text-2xl font-bold text-white bg-blue-200/20 py-5 rounded-xl w-[80%] mx-auto">

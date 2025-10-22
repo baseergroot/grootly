@@ -25,8 +25,9 @@ const LogoutButton = () => {
 
   return (
     <button
-      className='cursor-pointer'
-      onClick={HandleLogout}>
+      className="cursor-pointer disabled:cursor-not-allowed"
+      onClick={HandleLogout}
+      disabled={isPending}>
       { isPending ? "logging out..." : <LogoutSVG />}
     </button>
   )
