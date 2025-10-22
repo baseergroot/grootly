@@ -31,7 +31,7 @@ const Page = () => {
           <button type="submit" disabled={pending} className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300">
             {pending ? 'processing...' : 'Sign Up'}
           </button>
-          <p>{"Already have an account? "} <Link href="/signup" className="text-blue-500
+          <p>{"Already have an account? "} <Link href="/login" className="text-blue-500
           ">Login</Link></p>
         </form>
         

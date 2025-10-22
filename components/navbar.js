@@ -29,8 +29,8 @@ export default async function Navbar() {
       <ul className='flex items-center gap-5'>
 
         <li><Link target='_blank' href="https://www.github.com/baseergroot"><i className="ri-github-fill text-3xl"></i></Link></li>
-        {/* <li><Link className='bg-blue-400 px-4 py-2 rounded-2xl' href="/shorten">Get Started</Link></li> */}
-        {isLoggedin ? <LogoutButton /> : <button>Sign In</button>}
+
+        {isLoggedin ? <LogoutButton /> : <Link href="/signup" className='bg-blue-400 px-3 py-1 font-semibold rounded-2xl'>Sign Up</Link>}
       </ul>
     </nav>
   )

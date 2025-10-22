@@ -66,5 +66,5 @@ export async function SignupAction(initialState, formData) {
   cookieStore.set('token', token, { httpOnly: true, maxAge: 60 * 60 * 24 * 7 }) // 7 days
 
   // return success response
-  return redirect(307, '/shorten')
+  return redirect('/shorten')
 }

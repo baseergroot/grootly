@@ -4,6 +4,7 @@ import connectDB from "@/lib/mongodb";
 import Url from "@/models/url";
 import User from "@/models/user";
 import { verify } from "jsonwebtoken";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import {z} from "zod";
 
@@ -16,7 +17,7 @@ const urlValidation = z.object({
   shortUrl: z.string().min(3, { message: 'Short URL must be at least 3 characters long' }).max(20, { message: 'Short URL must be at most 20 characters long' }).regex(/^[a-zA-Z0-9_-]+$/, { message: 'Short URL can only contain letters, numbers, underscores, and hyphens' })
 });
 
-export async function generateShortUrl(initialState, formData) {
+export default async function generateShortUrl(initialState, formData) {
   const {originalUrl, shortUrl } = {
     originalUrl: formData.get("originalUrl"),
     shortUrl: formData.get("shortUrl"),
@@ -50,16 +51,18 @@ export async function generateShortUrl(initialState, formData) {
     shortUrl,
     // redirectUrl: process.env.NEXT_PUBLIC_HOST + "/" + shortUrl
   })
+
   // get cookies
   const cookie = await cookies()
   const jwToken = cookie.get("token")
 
   // verify jwt token
-  const user = verify(jwToken)
+  const user = verify(jwToken.value, process.env.JWT_SECRET)
 
-  user.id ?  await User.findByIdAndUpdate(user.id) : console.log("user is undefine", user)
+  user.id ?  await User.findByIdAndUpdate(user.id, { $push: { shortUrls: result._id } }) : console.log("user is undefine", user)
   console.log("insertion is : ", result);
 
+  revalidatePath("/shorten")
   return {
     success: true,
     error: false,

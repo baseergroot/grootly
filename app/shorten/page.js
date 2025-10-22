@@ -1,57 +1,46 @@
-"use client";
+import ShortnerFrom from "@/components/shortnerForm";
+import connectDB from "@/lib/mongodb";
+import User from "@/models/user";
+import { verify } from "jsonwebtoken";
+import { cookies } from "next/headers";
+import Link from "next/link";
 
-import React, { useActionState, useState } from "react";
-import { generateShortUrl } from "@/actions/shortUrl";
+const Shorten = async () => {
+  //  get cookies
+  const cookie = await cookies()
+  const jwToken = cookie.get("token")?.value
 
-const Shorten = () => {
-  const [state, formAction, isPending] = useActionState(generateShortUrl, { initialState: null });
+  // verify jwt
+  const user = verify(jwToken, process.env.JWT_SECRET)
+
+  // connect to database
+  await connectDB()
+
+  // get short urls for logged in user
+  const userHistory = await User.findById(user.id).populate("shortUrls", 'originalUrl shortUrl').select("-password")
+
+  // log for debuging
+  console.log("shortUrls is :", userHistory);
 
   return (
-    <main className="w-[100vw]  h-[100vh] py-20 ">
+    <main className="w-[100vw]  min-h-[100vh] py-20 ">
       <h1 className="text-center text-3xl font-bold text-white bg-blue-200/20 py-5 rounded-xl w-[80%] mx-auto">
         Grootly
       </h1>
-      <div className="flex flex-col items-center justify-center my-20 py-5 w-[80vw]  mx-auto rounded-2xl text-white bg-blue-200/20 ">
-        <h2 className="font-bold text-2xl my-5">Url Shortner</h2>
-        <form action={formAction} className="flex flex-col items-center gap-2.5 py-4 w-[100%] mx-auto rounded-2xl outline-none border-none">
-          <input
-            name="originalUrl"
-            className="bg-blue-200/20 rounded-xl px-4 py-2 w-[80%]"
-            type="text"
-            placeholder="Enter Url ex. https://www.google.com"
-          />
-          {/* show zod error */}
-          {state?.error?.zodError.originalUrl && <div className="text-red-500 font-bold">{state?.error?.zodError.originalUrl}</div>}
-
-          <input
-            name="shortUrl"
-            className="bg-blue-200/20 rounded-xl px-4 py-2 w-[80%]"
-            type="text"
-            placeholder="Enter URL Name ex. nomi or google"
-            
-          />
-          {state?.error?.zodError.shortUrl && <div className="text-red-500 font-bold">{state?.error?.zodError.shortUrl}</div>}
-
-          <button
-            type="submit"
-            disabled={isPending}
-            className="bg-blue-400 font-bold rounded-xl px-4 py-2 my-2 text-white disabled:bg-blue-300"
-          >
-            {isPending ? "Processing" : "Shorten"}
-          </button>
-
-          {state.success && (
-            <>
-              <p className="font-bold mt-2">Your Short Url:</p>
-              <code className="text-center">
-                <a target="_blank" rel="noopener noreferrer" href={state.generatedUrl} className="">
-                  {state.generatedUrl}
-                </a>
-              </code>
-            </>
-          )}
-        </form>
-      </div>
+      <ShortnerFrom />
+      <section>
+        <h2 className="text-center text-2xl font-bold text-white bg-blue-200/20 py-5 rounded-xl w-[80%] mx-auto">
+          History
+        </h2>
+        <div className="flex flex-col items-center gap-2.5 py-4 w-[100%] mx-auto rounded-2xl outline-none border-none">
+          {userHistory?.shortUrls?.map((urls) => (
+            <div key={urls._id} className="bg-blue-200/20 text-gray-300 rounded-xl px-4 py-2 w-[80%] flex flex-col justify-between">
+              <p><span className="font-bold">Original</span> - {urls.originalUrl}</p>
+              <Link href={`/${urls.shortUrl}`}><span className="font-bold ">Short</span> - {process.env.NEXT_PUBLIC_HOST}/{urls.shortUrl}</Link>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 };
