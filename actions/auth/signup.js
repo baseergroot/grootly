@@ -43,7 +43,7 @@ export async function SignupAction(initialState, formData) {
   // check if user already exists
   const existingUser = await User.findOne({ username })
   if (existingUser) {
-    return { error: 'User already exists' }
+    return { error: 'Username already exists' }
   }
   // hash password
   const hashedPassword = await bcrypt.hash(password, 10)

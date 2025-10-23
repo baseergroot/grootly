@@ -7,7 +7,7 @@ import { useActionState } from "react";
 const ShortnerFrom = () => {
     const [state, formAction, isPending] = useActionState(generateShortUrl, { initialState: null });
     return (
-        <section className="flex flex-col items-center justify-center my-20 py-5 w-[80vw]  mx-auto rounded-2xl text-white bg-blue-200/20 ">
+        <section className="flex flex-col items-center justify-center my-20 py-5 w-[80vw]  mx-auto rounded-2xl text-white bg-blue-200/10 ">
         <h2 className="font-bold text-2xl my-5">Url Shortner</h2>
         <form action={formAction} className="flex flex-col items-center gap-2.5 py-4 w-[100%] mx-auto rounded-2xl outline-none border-none">
           <input

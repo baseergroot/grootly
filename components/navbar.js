@@ -24,7 +24,7 @@ export default async function Navbar() {
 
 
   return (
-    <nav className='flex justify-between items-center px-4 lg:px-10 py-5 mx-3 rounded-xl bg-blue-950 text-white '>
+    <nav className='flex justify-between items-center px-4 lg:px-10 py-5 text-white border-b-white/30 border-b'>
       <span className='text-xl font-bold'>Grootly</span>
       <ul className='flex items-center gap-5'>
 
