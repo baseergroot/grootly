@@ -34,7 +34,7 @@ const Shorten = async () => {
         Grootly
       </h1> */}
       <Navbar />
-      <ShortnerFrom />
+      {/* <ShortnerFrom /> */}
       <section>
         <h2 className="text-center text-2xl font-bold text-white bg-blue-200/10 py-5 rounded-xl w-[80%] mx-auto">
           History
