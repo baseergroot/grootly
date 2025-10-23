@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import LogoutButton from './logoutButton'
+import LogoutButton from './auth/logoutButton'
 import { cookies } from 'next/headers'
 import { verify } from 'jsonwebtoken'
 
