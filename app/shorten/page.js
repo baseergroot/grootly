@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar";
 import ShortnerFrom from "@/components/shortnerForm";
 import connectDB from "@/lib/mongodb";
+import Url from "@/models/url";
 import User from "@/models/user";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
